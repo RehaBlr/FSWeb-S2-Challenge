@@ -134,16 +134,10 @@ console.log("örnek-4 : ",bircumle);
 let di = ["Annem","ekmek","almak","için","gitti."];
 function cumlelereDonustur(cumleArr,sep=",") {
   /* kodlar buraya */
-  let sonuc =cumleArr.map((cumle) => {
-    let cum =cumle[0];
-    for(let i =1 ; i<cumle.length; i++){
-      cum=[cum,cumle[i]].join(sep);
-    }
-    return cum;
-  });
+  let sonuc =cumleArr.map((kelime) => kelime.join(sep));
   return sonuc;
 }
-//console.log(cumlelereDonustur(cumleler," "));
+console.log(cumlelereDonustur(cumleler," "));
 
 /* GÖREV 2:
 		paragrafOlustur fonksiyonuna aşağıdakileri uygulayın.
@@ -201,6 +195,7 @@ elemanlara denk gelecek şekilde, iki diziyi birleştirip sonucu manav dizisine 
 var manav;
 
 manav =meyveler.concat(sebzeler);
+//manav = [...meyveler,...sebzeler];
 // manav.concat(meyveler,sebzeler);
 //console.log("manav :",manav);
 
@@ -225,12 +220,51 @@ function emojileriDonustur(atilanmesaj,objEmojiler) {
   /* kodlar buraya */
   let mesajSonHal = atilanmesaj;
   for(let i in objEmojiler){
-    mesajSonHal=mesajSonHal.replaceAll(i,objEmojiler[i]);
+    mesajSonHal=mesajSonHal.replaceAll(i.toLowerCase(),objEmojiler[i]);
     mesajSonHal=mesajSonHal.replaceAll(i.toUpperCase(),objEmojiler[i]);
   }
   return mesajSonHal;
 }
-//console.log(emojileriDonustur("yani hem :d hem de :D sembolleri :)  :( :D :d :P :p :o :O <3 ",emojiler))
+console.log("emo-1",emojileriDonustur("yani hem :d hem de :D sembolleri :)  :( :D :d :P :p :o :O <3 ",emojiler));
+
+function emojileriDonustur2(atilanM,emojiklavuzu){
+  let yeniMesaj = atilanM;
+  let anahtarlar =Object.keys(emojiklavuzu);
+  //[":)",":(",":d",":p",":o","<3"];
+  for (let i = 0 ; i<anahtarlar.length; i++){
+    yeniMesaj= yeniMesaj.replaceAll(
+      anahtarlar[i].toLowerCase(),emojiklavuzu[anahtarlar[i]]
+    );
+    yeniMesaj =yeniMesaj.replaceAll(
+      anahtarlar[i].toUpperCase(),emojiklavuzu[anahtarlar[i]]
+    );
+  }
+  return yeniMesaj;
+    
+}
+console.log("emo-2",emojileriDonustur2("yani hem :d hem de :D sembolleri :)  :( :D :d :P :p :o :O <3 ",emojiler));
+
+var emojiler2 = {
+  ":\\)": "🙂",   // Regexp kullanırken (  ve ) işaretleri tanımlı olduğu için kaçış karakteri kullanmamız gerekti.
+  ":\\(": "😔",   // Regexp kullanırken (  ve ) işaretleri tanımlı olduğu için kaçış karakteri kullanmamız gerekti.
+  ":d": "😁",
+  ":p": "😛",
+  ":o": "😱",
+  "<3": "❤️",
+};
+function emojileriDonustur3(emocumle,emolist){
+  for(const [shortCode, emoji] of Object.entries(emolist)){
+    emocumle =emocumle.replace(RegExp(shortCode,"gi"),emoji);
+  }
+  return emocumle;
+// let emo = Object.values(objEmojiler);
+// mesajSonHal = atilanmesaj.replace(/anahtarlar/gi,emo);
+// return mesajSonHal;
+    
+}
+console.log("emo-3",emojileriDonustur3("yani hem :d hem de :D sembolleri :)  :( :D :d :P :p :o :O <3 ",emojiler2));
+
+
 /*  Bu satırın aşağısındaki kodları lütfen değiştirmeyin  */
 function sa() {
   console.log("Kodlar çalışıyor");
